@@ -4,7 +4,6 @@
 
 1. Avoir installé le client Ef Core https://learn.microsoft.com/en-us/ef/core/get-started/overview/install#get-the-net-cli-tools
 1. Posséder une instance de MariadDB sur ta machine avec l'utilisateur root:root
-1. MariaDB possède une table nommée PWATodos (IA niveau 3)
 1. Faire un build de la solution.
 
 Tu vas avoir des erreurs. Pour que le build fonctionne, tu devras mettre en commentaire les useCases qui n'existent pas encore dans DependencyInjection. Tu devras aussi créer un nouveau DTO qui se nomme `CreateTodoDTO`. Cette classe ne contient que deux propriétés qui sont fournies lors de la création d'un DTO. Peux-tu deviner lesquelles?
