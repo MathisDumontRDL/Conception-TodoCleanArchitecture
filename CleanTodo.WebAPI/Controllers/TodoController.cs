@@ -5,26 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TodoController : ControllerBase
+public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase) : ControllerBase
 {
-    private GetAllTodosUseCase _getAllUseCase;
-    private GetTodoUseCase _getTodoUseCase;
-
-    public TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase)
-    {
-        _getAllUseCase = getAllUseCase;
-        _getTodoUseCase = getTodoUseCase;
-    }
-
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoDto>>> GetAll()
     {
-        var todos = await _getAllUseCase.Execute();
+        var todos = await getAllUseCase.Execute();
         return Ok(todos);
     }
 
     //Cadeau! pour le create. On utilise un CreatedAtAction qui retourne un code http 201 et un header location avec l'url du nouvel élément créé.
-    //
+    
     //[HttpPost]
     //public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoDto createTodoDto)
     //{
@@ -41,7 +32,7 @@ public class TodoController : ControllerBase
     {
         try
         {
-            TodoDto todo = await _getTodoUseCase.Execute(id);
+            TodoDto todo = await getTodoUseCase.Execute(id);
             return Ok(todo);
         }
         catch (NotFoundException)
