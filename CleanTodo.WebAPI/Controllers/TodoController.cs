@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase) : ControllerBase
+public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase, CreateTodoUseCase _createUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoDto>>> GetAll()
@@ -15,17 +15,17 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
     }
 
     //Cadeau! pour le create. On utilise un CreatedAtAction qui retourne un code http 201 et un header location avec l'url du nouvel élément créé.
-    
-    //[HttpPost]
-    //public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoDto createTodoDto)
-    //{
-    //    TodoDto todo = await _createUseCase.Execute(createTodoDto);
 
-    //    return CreatedAtAction(
-    //        nameof(Get),
-    //        new { id = todo.Id },
-    //        todo);
-    //}
+    [HttpPost("Add")]
+    public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoDto createTodoDto)
+    {
+        TodoDto todo = await _createUseCase.Execute(createTodoDto);
+
+        return CreatedAtAction(
+            nameof(Get),
+            new { id = todo.Id },
+            todo);
+    }
 
     [HttpGet("{id}")] // /api/todo/ton_id
     public async Task<IActionResult> Get(Guid id)

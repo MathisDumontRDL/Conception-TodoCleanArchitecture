@@ -14,9 +14,11 @@ public class CreateTodoUseCase
         _todoRepository = todoRepository;
     }
 
-    public async Task<TodoDto> Execute(Todo todoE)
+    public async Task<TodoDto> Execute(CreateTodoDto createdTodo)
     {
-        Todo todo = await _todoRepository.Add(todoE);
+        Todo todoConvert = new Todo(createdTodo.Title);
+
+        Todo todo = await _todoRepository.Add(todoConvert);
         //validation et le return?
         return new TodoDto(todo);
     }
