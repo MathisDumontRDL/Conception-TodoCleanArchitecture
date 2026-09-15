@@ -12,7 +12,6 @@ public class CreateTodoUseCase
     public CreateTodoUseCase(ITodoRepository todoRepository)
     {
         _todoRepository = todoRepository;
-
     }
 
     public async Task<TodoDto> Execute(CreateTodoDto createdTodo)
