@@ -27,7 +27,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Publish in Release mode
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish CleanTodo.WebAPI/CleanTodo.API.csproj -c Release -o ./publish
 
       - name: Stop back-end
         uses: appleboy/ssh-action@v1.0.3
