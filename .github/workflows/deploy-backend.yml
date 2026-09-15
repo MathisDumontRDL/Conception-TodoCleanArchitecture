@@ -2,7 +2,7 @@ name: Deploy Backend to VPS
 
 on:
   push:
-    branches: [main]
+    branches: [student]
     paths:
       - "CleanTodo.WebAPI/**"
       - "CleanTodo.Application/**"
