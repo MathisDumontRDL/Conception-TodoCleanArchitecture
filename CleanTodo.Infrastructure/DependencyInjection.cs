@@ -1,5 +1,6 @@
 ﻿using CleanTodo.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,8 @@ public static class DependencyInjection
 
         // Register Repositories
         services.AddScoped<ITodoRepository, TodoRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+
 
         return services;
     }

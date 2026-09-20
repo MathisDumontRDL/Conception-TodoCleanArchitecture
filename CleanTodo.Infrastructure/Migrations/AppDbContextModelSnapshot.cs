@@ -43,7 +43,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Todos");
+                    b.ToTable("Todos", (string)null);
                 });
 
             modelBuilder.Entity("CleanTodo.Domain.Entities.User", b =>
@@ -64,7 +64,7 @@ namespace CleanTodo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 #pragma warning restore 612, 618
         }
