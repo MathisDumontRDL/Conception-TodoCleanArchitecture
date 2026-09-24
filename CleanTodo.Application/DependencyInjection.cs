@@ -19,7 +19,7 @@ public static class DependencyInjection
         services.AddScoped<GetAllUsersUseCase>();
         services.AddScoped<RegisterUseCase>();
         services.AddScoped<LoginUseCase>();
-
+        services.AddScoped<JwtService>();
 
         return services;
     }

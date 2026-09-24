@@ -2,15 +2,40 @@
 // Program.cs
 using CleanTodo.Application;
 using CleanTodo.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 public class Program
 {
+
     public static void Main(string[] args)
     {
 
-
         var builder = WebApplication.CreateBuilder(args);
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+
+        // Add Authentication services
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+         {
+             options.TokenValidationParameters = new TokenValidationParameters
+             {
+                 ValidateIssuer = true,
+                 ValidateAudience = true,
+                 ValidateLifetime = true,
+                 ValidateIssuerSigningKey = true,
+                 ValidIssuer = jwtSettings["Issuer"]!,
+                 ValidAudience = jwtSettings["Audience"]!,
+                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
+             };
+         });
+
 
         // Add services to the container.
         builder.Services.AddControllers();
@@ -23,14 +48,44 @@ public class Program
 
         // Add Swagger/OpenAPI
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-       /* using (var scope = app.Services.CreateScope())
+        builder.Services.AddSwaggerGen(options =>
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            dbContext.Database.Migrate(); 
-        }*/
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header
+            });
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
+
+
+        // Add Authorization
+        builder.Services.AddAuthorization();
+
+        builder.Services.AddControllers();
+        var app = builder.Build();
+        /* using (var scope = app.Services.CreateScope())
+         {
+             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+             dbContext.Database.Migrate(); 
+         }*/
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -41,6 +96,7 @@ public class Program
        
 
         app.UseHttpsRedirection();
+        app.UseAuthentication(); // Must come before UseAuthorization
         app.UseAuthorization();
         app.MapControllers();
 

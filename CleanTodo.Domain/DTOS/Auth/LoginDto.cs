@@ -4,7 +4,6 @@ namespace CleanTodo.Domain.DTOS.Auth;
 
 public class LoginDto
 {
-    public Guid Id { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
     public LoginDto() { }
@@ -14,7 +13,6 @@ public class LoginDto
     public LoginDto(User user)
     {
 
-        Id = user.Id;
         Username = user.Username;
         Password = user.Password;
     }
