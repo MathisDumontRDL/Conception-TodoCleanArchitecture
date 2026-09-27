@@ -24,7 +24,7 @@ namespace CleanTodo.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "User",
+                table: "users",
                 columns: new[] { "Id", "Username", "Password" },
                 values: new object[] { Guid.NewGuid(), "root", "root" }
             );

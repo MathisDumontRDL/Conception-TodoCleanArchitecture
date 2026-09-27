@@ -23,22 +23,30 @@ public class Program
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
         .AddJwtBearer(options =>
-         {
-             options.TokenValidationParameters = new TokenValidationParameters
-             {
-                 ValidateIssuer = true,
-                 ValidateAudience = true,
-                 ValidateLifetime = true,
-                 ValidateIssuerSigningKey = true,
-                 ValidIssuer = jwtSettings["Issuer"]!,
-                 ValidAudience = jwtSettings["Audience"]!,
-                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
-             };
-         });
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"]!,
+                ValidAudience = jwtSettings["Audience"]!,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
+            };
 
-
-        // Add services to the container.
-        builder.Services.AddControllers();
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    if (context.Request.Cookies.ContainsKey("jwt"))
+                    {
+                        context.Token = context.Request.Cookies["jwt"];
+                    }
+                    return Task.CompletedTask;
+                }
+            };
+        });
 
         // Add Application Layer
         builder.Services.AddApplication();
@@ -81,11 +89,13 @@ public class Program
 
         builder.Services.AddControllers();
         var app = builder.Build();
-        /* using (var scope = app.Services.CreateScope())
+         /*using (var scope = app.Services.CreateScope())
          {
              var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-             dbContext.Database.Migrate(); 
-         }*/
+            //dbContext.Database.Migrate(); 
+             /*dbContext.Database.EnsureDeleted();
+             dbContext.Database.EnsureCreated();
+        }*/
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

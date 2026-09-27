@@ -68,3 +68,10 @@ node_modules/
 
 # TypeScript
 *.tsbuildinfo
+
+#Empecher le push de ces deux fichiers avec ces etapes
+#Étape 2 : retirer les fichiers du suivi Git (sans les supprimer du disque)
+#git rm --cached appsettings.json
+#git rm --cached appsettings.Development.json
+appsettings.json
+appsettings.Development.json

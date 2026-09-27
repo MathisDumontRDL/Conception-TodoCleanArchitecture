@@ -49,15 +49,27 @@ public class AuthController(GetAllUsersUseCase _getAllUsersUseCase, LoginUseCase
 
             var token = _jwtService.GenerateToken(user.Id, user.Username, "Admin");
 
-                return Ok(new
-                {
-                     token 
-                });
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddMinutes(60)
+            });
+
+            return Ok(new { message = "Connexion réussie" });
         }
         catch (NotFoundException)
         {
             return Unauthorized();
         }
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("jwt");
+        return Ok(new { message = "Déconnexion réussie" });
     }
 
     [HttpGet("{id}")] // /api/auth/ton_id
