@@ -68,7 +68,13 @@ public class AuthController(GetAllUsersUseCase _getAllUsersUseCase, LoginUseCase
     [HttpPost("logout")]
     public IActionResult Logout()
     {
-        Response.Cookies.Delete("jwt");
+        Response.Cookies.Delete("jwt", new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Path = "/"
+        });
         return Ok(new { message = "Déconnexion réussie" });
     }
 
