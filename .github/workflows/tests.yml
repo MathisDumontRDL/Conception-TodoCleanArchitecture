@@ -1,0 +1,27 @@
+name: Tests unitaires
+
+on:
+  pull_request:
+    branches: [student]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restaurer les dépendances
+        run: dotnet restore
+
+      - name: Compiler
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Lancer les tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
