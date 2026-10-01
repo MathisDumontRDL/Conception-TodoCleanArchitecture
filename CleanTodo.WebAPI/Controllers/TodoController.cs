@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase, CreateTodoUseCase _createUseCase) : ControllerBase
+public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase getTodoUseCase, CreateTodoUseCase _createUseCase, ToggleTodoUseCase _toggleTodoUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoDto>>> GetAll()
@@ -18,7 +18,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
     //Cadeau! pour le create. On utilise un CreatedAtAction qui retourne un code http 201 et un header location avec l'url du nouvel élément créé.
 
     [HttpPost("Add")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoDto createTodoDto)
     {
         TodoDto todo = await _createUseCase.Execute(createTodoDto);
@@ -36,6 +36,21 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
         {
             TodoDto todo = await getTodoUseCase.Execute(id);
             return Ok(todo);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+
+    [HttpPatch("{id}/toggle")]
+    public async Task<IActionResult> Toggle(Guid id)
+    {
+        try
+        {
+            var todo = await _toggleTodoUseCase.Execute(id);
+            return NoContent();
         }
         catch (NotFoundException)
         {

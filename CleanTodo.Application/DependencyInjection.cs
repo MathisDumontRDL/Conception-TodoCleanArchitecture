@@ -15,7 +15,7 @@ public static class DependencyInjection
        // services.AddScoped<DeleteTodoUseCase>();
         services.AddScoped<GetTodoUseCase>();
         services.AddScoped<GetAllTodosUseCase>();
-        // services.AddScoped<ToggleTodoCompleteStatusUseCase>();
+        services.AddScoped<ToggleTodoUseCase>();
         services.AddScoped<GetAllUsersUseCase>();
         services.AddScoped<RegisterUseCase>();
         services.AddScoped<LoginUseCase>();
