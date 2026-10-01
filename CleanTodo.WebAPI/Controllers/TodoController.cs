@@ -45,7 +45,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
 
 
     [HttpPatch("{id}/toggle")]
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Toggle(Guid id)
     {
         try
@@ -60,7 +60,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
         try
