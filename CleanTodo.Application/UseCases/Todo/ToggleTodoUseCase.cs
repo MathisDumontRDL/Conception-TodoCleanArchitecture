@@ -5,7 +5,6 @@ using CleanTodo.Domain.Interfaces.Repositories;
 
 namespace CleanTodo.Application.UseCase;
 
-// ToggleTodoUseCase.cs
 public class ToggleTodoUseCase
 {
     private readonly ITodoRepository _todoRepository;
