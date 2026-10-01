@@ -37,4 +37,14 @@ public class TodoRepository : ITodoRepository
         await _context.SaveChangesAsync();
         return todo;
     }
+
+    public async Task Delete(Guid id)
+    {
+        var todo = await _context.Todos.FindAsync(id);
+        if (todo != null)
+        {
+            _context.Todos.Remove(todo);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

@@ -8,5 +8,6 @@ public interface ITodoRepository
     Task<Todo?> FindById(Guid id);
     Task<Todo> Add(Todo todo);
     Task<Todo> Update(Todo todo);
+    Task Delete(Guid id);
 
 }
