@@ -86,9 +86,21 @@ public class Program
 
         // Add Authorization
         builder.Services.AddAuthorization();
+        builder.Services.AddCors(options => {
+            options.AddPolicy("AllowAll", policy => {
+                policy.AllowAnyOrigin()
+
+            .AllowAnyMethod()
+
+                .AllowAnyHeader();
+
+            });
+
+        });
 
         builder.Services.AddControllers();
         var app = builder.Build();
+        app.UseCors("AllowAll");
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
