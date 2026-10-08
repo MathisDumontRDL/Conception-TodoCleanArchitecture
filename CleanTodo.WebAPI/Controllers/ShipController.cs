@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase) : ControllerBase
+public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShipDto>>> GetAll()
@@ -40,6 +40,21 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
             nameof(Get),
             new { id = ship.Id },
             ship);
+    }
+
+    [HttpDelete("{id}")]
+    //[Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        try
+        {
+            await _deleteShipUseCase.Execute(id);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
     }
 
 }

@@ -8,6 +8,6 @@ public interface IShipRepository
     Task<Ship?> FindById(Guid id);
     Task<Ship> Add(Ship ship);
     //Task<Todo> Update(Todo todo);
-    //Task Delete(Guid id);
+    Task Delete(Guid id);
 
 }

@@ -30,4 +30,14 @@ public class ShipRepository : IShipRepository
         return newShip.Entity; 
     }
 
+    public async Task Delete(Guid id)
+    {
+        var ship = await _context.Ships.FindAsync(id);
+        if (ship != null)
+        {
+            _context.Ships.Remove(ship);
+            await _context.SaveChangesAsync();
+        }
+    }
+
 }
