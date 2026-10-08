@@ -18,7 +18,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
     //Cadeau! pour le create. On utilise un CreatedAtAction qui retourne un code http 201 et un header location avec l'url du nouvel élément créé.
 
     [HttpPost("Add")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<ActionResult<TodoDto>> Create([FromBody] CreateTodoDto createTodoDto)
     {
         TodoDto todo = await _createUseCase.Execute(createTodoDto);
@@ -45,7 +45,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
 
 
     [HttpPatch("{id}/toggle")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Toggle(Guid id)
     {
         try
@@ -60,7 +60,7 @@ public class TodoController(GetAllTodosUseCase getAllUseCase, GetTodoUseCase get
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
         try
