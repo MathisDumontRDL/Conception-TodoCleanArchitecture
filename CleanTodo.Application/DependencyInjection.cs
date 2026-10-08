@@ -25,6 +25,8 @@ public static class DependencyInjection
         services.AddScoped<GetShipUseCase>();
         services.AddScoped<GetAllShipsUseCase>();
         services.AddScoped<DeleteShipUseCase>();
+        services.AddScoped<UpdateShipUseCase>();
+
 
 
 

@@ -7,7 +7,7 @@ public interface IShipRepository
     Task<List<Ship>> GetAll();
     Task<Ship?> FindById(Guid id);
     Task<Ship> Add(Ship ship);
-    //Task<Todo> Update(Todo todo);
+    Task<Ship> Update(Ship ship);
     Task Delete(Guid id);
 
 }

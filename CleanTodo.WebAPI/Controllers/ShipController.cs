@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase) : ControllerBase
+public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase, UpdateShipUseCase _updateShipUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShipDto>>> GetAll()
@@ -49,6 +49,21 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
         try
         {
             await _deleteShipUseCase.Execute(id);
+            return NoContent();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPatch("{id}/update")]
+    //[Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] ModifyShipDto modifyShipDto)
+    {
+        try
+        {
+            var todo = await _updateShipUseCase.Execute(id, modifyShipDto);
             return NoContent();
         }
         catch (NotFoundException)

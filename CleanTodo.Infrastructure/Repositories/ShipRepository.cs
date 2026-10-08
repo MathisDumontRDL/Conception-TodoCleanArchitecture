@@ -40,4 +40,11 @@ public class ShipRepository : IShipRepository
         }
     }
 
+    public async Task<Ship> Update(Ship ship)
+    {
+        _context.Ships.Update(ship);
+        await _context.SaveChangesAsync();
+        return ship;
+    }
+
 }
