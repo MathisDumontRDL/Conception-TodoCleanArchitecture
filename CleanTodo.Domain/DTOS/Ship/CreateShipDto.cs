@@ -2,7 +2,7 @@
 using CleanTodo.Domain.Entities;
 
 
-public class CreatedShipDto
+public class CreateShipDto
 {
     public string Name { get; set; }
     public int GoldCargo { get; set; }
@@ -12,9 +12,9 @@ public class CreatedShipDto
 
     public string CreatedBy { get; set; }
 
-    public CreatedShipDto() { }
+    public CreateShipDto() { }
 
-    public CreatedShipDto(Ship ship)
+    public CreateShipDto(Ship ship)
     {
         Name = ship.Name;
         GoldCargo = ship.GoldCargo;

@@ -32,7 +32,7 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
     }
 
     [HttpPost("Add")]
-    public async Task<ActionResult<ShipDto>> Create([FromBody] CreatedShipDto createShipDto)
+    public async Task<ActionResult<ShipDto>> Create([FromBody] CreateShipDto createShipDto)
     {
         ShipDto ship = await _createdShipUseCase.Execute(createShipDto);
 
