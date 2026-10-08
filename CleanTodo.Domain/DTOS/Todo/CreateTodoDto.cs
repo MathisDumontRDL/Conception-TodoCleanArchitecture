@@ -1,6 +1,6 @@
-﻿using CleanTodo.Domain.Entities;
+﻿namespace CleanTodo.Domain.DTOS.Todo;
+using CleanTodo.Domain.Entities;
 
-namespace CleanTodo.Domain.DTOS;
 
 public class CreateTodoDto
 {

@@ -21,6 +21,12 @@ public static class DependencyInjection
         services.AddScoped<LoginUseCase>();
         services.AddScoped<JwtService>();
 
+        services.AddScoped<CreateShipUseCase>();
+        services.AddScoped<GetShipUseCase>();
+        services.AddScoped<GetAllShipsUseCase>();
+
+
+
         return services;
     }
 }

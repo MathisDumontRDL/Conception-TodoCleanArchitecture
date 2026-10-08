@@ -11,17 +11,17 @@
         public int CrewSize { get; set; }
         public string CreatedBy { get; set; }
         public DateTime LastModified { get; set; }
-        public Ship(string name, int goldCargo, DateTime createdAt, string captain, string status, int crewSize, string CreatedBy, DateTime lastModified)
+        public Ship(string name, int goldCargo, string captain, string status, int crewSize, string createdBy)
         {
             Id = Guid.NewGuid();
             Name = name;
             GoldCargo = goldCargo;
-            CreatedAt = createdAt;
+            CreatedAt = DateTime.Now;
             Captain = captain;
             Status = status;
             CrewSize = crewSize;
-            CreatedAt = createdAt;
-            LastModified = lastModified;
+            CreatedBy = createdBy;
+            LastModified = DateTime.Now;
         }
     }
 }
