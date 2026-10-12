@@ -25,6 +25,6 @@ public class ConnectAPIService
         var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appInfos["Secret"]));
         client.DefaultRequestHeaders.Add("x-client-id", appInfos["ID"]);
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", appInfos["Secret"]);
-        return userId;
+        return "";
     }
 }
