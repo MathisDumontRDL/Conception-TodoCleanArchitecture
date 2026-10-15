@@ -72,4 +72,17 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
         }
     }
 
+    [HttpPost("/dock")]
+    //[Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Dock([FromBody] CreateShipDto createShipDto)
+    {
+
+        ShipDto ship = await _createdShipUseCase.Execute(createShipDto);
+
+        return CreatedAtAction(
+            nameof(Get),
+            new { id = ship.Id },
+            ship);
+    }
+
 }
