@@ -72,7 +72,7 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
         }
     }
 
-    [HttpPost("/dock")]
+    [HttpPost("dock")]
     //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Dock([FromBody] CreateShipDto createShipDto)
     {
