@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase, UpdateShipUseCase _updateShipUseCase) : ControllerBase
+public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase, UpdateShipUseCase _updateShipUseCase, DockShipUseCase _dockShipUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShipDto>>> GetAll()
@@ -74,10 +74,10 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
 
     [HttpPost("dock")]
     //[Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Dock([FromBody] CreateShipDto createShipDto)
+    public async Task<IActionResult> Dock([FromBody] DockShipDto dockShipDto)
     {
 
-        ShipDto ship = await _createdShipUseCase.Execute(createShipDto);
+        ShipDto ship = await _dockShipUseCase.Execute(dockShipDto);
 
         return CreatedAtAction(
             nameof(Get),

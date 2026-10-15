@@ -23,5 +23,17 @@
             CreatedBy = createdBy;
             LastModified = DateTime.Now;
         }
+        public Ship(string name, int goldCargo, DateTime createdAt,string captain, string status, int crewSize, string createdBy)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            GoldCargo = goldCargo;
+            CreatedAt = createdAt;
+            Captain = captain;
+            Status = status;
+            CrewSize = crewSize;
+            CreatedBy = createdBy;
+            LastModified = DateTime.Now;
+        }
     }
 }
