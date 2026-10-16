@@ -6,14 +6,25 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Net.Http.Headers;
 using System.Text;
 public class Program
 {
 
+
     public static void Main(string[] args)
     {
-
         var builder = WebApplication.CreateBuilder(args);
+        var appURL = builder.Configuration.GetSection("ApiURL");
+        var appInfos = builder.Configuration.GetSection("AppInfos");
+        builder.Services.AddHttpClient<Broker>(client =>
+        {
+            client.BaseAddress = new Uri(appURL["URL"]);
+            client.Timeout = TimeSpan.FromSeconds(30);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("x-client-id", appInfos["ID"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", appInfos["Secret"]);
+        });
         var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
         // Add Authentication services

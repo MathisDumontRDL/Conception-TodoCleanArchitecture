@@ -24,7 +24,7 @@ public class DockShipUseCase
             throw new ValidationException(validationResult.Errors);
         }
 
-        Ship shipConvert = new Ship(dockShipDto.Name, dockShipDto.GoldCargo, dockShipDto.CreatedAt, dockShipDto.Captain, dockShipDto.Status, dockShipDto.CrewSize, dockShipDto.CreatedBy);
+        Ship shipConvert = new Ship(dockShipDto.Name, dockShipDto.GoldCargo, dockShipDto.CreatedAt, dockShipDto.Captain,"docked", dockShipDto.CrewSize, dockShipDto.CreatedBy);
 
         Ship ship = await _shipRepository.Add(shipConvert);
         return new ShipDto(ship);

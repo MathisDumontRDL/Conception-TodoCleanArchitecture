@@ -11,6 +11,7 @@
         public int CrewSize { get; set; }
         public string CreatedBy { get; set; }
         public DateTime LastModified { get; set; }
+        //Pour la creation
         public Ship(string name, int goldCargo, string captain, string status, int crewSize, string createdBy)
         {
             Id = Guid.NewGuid();
@@ -23,6 +24,7 @@
             CreatedBy = createdBy;
             LastModified = DateTime.Now;
         }
+        //Pour la creation dock
         public Ship(string name, int goldCargo, DateTime createdAt,string captain, string status, int crewSize, string createdBy)
         {
             Id = Guid.NewGuid();

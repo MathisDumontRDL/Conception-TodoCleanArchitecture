@@ -28,6 +28,10 @@ public static class DependencyInjection
         services.AddScoped<UpdateShipUseCase>();
         services.AddScoped<DockShipUseCase>();
 
+        services.AddScoped<GetAllPortsUseCase>();
+        services.AddScoped<PortService>();
+
+
 
 
 
