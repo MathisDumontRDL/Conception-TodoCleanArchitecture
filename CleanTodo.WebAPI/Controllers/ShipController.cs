@@ -86,7 +86,7 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
     }
 
     [HttpPost("sail/{destination}")]
-    public async Task<ActionResult<IActionResult>> Sail(Guid id, string destination)
+    public async Task<IActionResult> Sail(Guid id, string destination)
     {
         await _sailShipUseCase.Execute(id, destination);
 
