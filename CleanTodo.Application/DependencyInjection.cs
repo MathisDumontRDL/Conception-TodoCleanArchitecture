@@ -31,6 +31,9 @@ public static class DependencyInjection
         services.AddScoped<GetAllPortsUseCase>();
         services.AddScoped<PortService>();
 
+        services.AddScoped<SailShipUseCase>();
+
+
 
 
 

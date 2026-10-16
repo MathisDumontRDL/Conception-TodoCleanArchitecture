@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase, UpdateShipUseCase _updateShipUseCase, DockShipUseCase _dockShipUseCase) : ControllerBase
+public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCase _getShipUseCase, GetAllShipsUseCase _getAllShipsUseCase, DeleteShipUseCase _deleteShipUseCase, UpdateShipUseCase _updateShipUseCase, DockShipUseCase _dockShipUseCase, SailShipUseCase _sailShipUseCase) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ShipDto>>> GetAll()
@@ -84,5 +84,14 @@ public class ShipController(CreateShipUseCase _createdShipUseCase, GetShipUseCas
             new { id = ship.Id },
             ship);
     }
+
+    [HttpPost("sail/{destination}")]
+    public async Task<ActionResult<IActionResult>> Sail(Guid id, string destination)
+    {
+        await _sailShipUseCase.Execute(id, destination);
+
+       return NoContent();
+    }
+
 
 }

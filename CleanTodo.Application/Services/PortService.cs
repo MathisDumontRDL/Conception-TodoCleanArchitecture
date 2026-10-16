@@ -16,4 +16,9 @@ public class PortService
         return await _broker.GetPortsAsync();
     }
 
+    public async Task SailShipAsync(string destination, DockShipDto sailShip)
+    {
+        await _broker.SailShipAsync(destination, sailShip);
+    }
+
 }
